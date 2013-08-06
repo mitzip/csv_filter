@@ -6,7 +6,7 @@ csv_filter: filter a csv file by one or more other csv files
 @author: mitzip
 @contact: http://github.com/mitzip/csv_filter
 @license: Public Domain
-@version: 1.0
+@version: 1.0.0
 @todo: add argument to toggle case-sensitivity
 """
 
