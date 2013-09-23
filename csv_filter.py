@@ -16,10 +16,10 @@ import argparse
 
 # Define accepted command-line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--filter', type=file, required=True,
+parser.add_argument('--filter', type=argparse.FileType('rU'), required=True,
                     help='CSV file to be filtered')
-parser.add_argument('--by', type=file, required=True, action='append',
-                    help='CSV file to filter by')
+parser.add_argument('--by', type=argparse.FileType('rU'), required=True,
+                    action='append', help='CSV file to filter by')
 parser.add_argument('--output', nargs='?',
                     type=argparse.FileType('w'), default=sys.stdout,
                     help='Filtered output CSV filename, omit for stdout')
@@ -44,6 +44,12 @@ for by_file in args.by:
     to_remove.update({row[args.by_col].lower() for row in by_csv if row})
 
 # Check each row in CSV you want filtered for field values in to_remove set
+totalRemoved = 0
 for row in filter_csv:
     if row and row[args.filter_col].lower() not in to_remove:
         filtered_csv.writerow(row)
+    else:
+        # TODO: Add option to output removed rows
+        totalRemoved += 1
+
+print "Total Removed:", totalRemoved
